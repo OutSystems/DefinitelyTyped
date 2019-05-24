@@ -1,10 +1,10 @@
-// Type definitions for rc-tree 1.11
+// Type definitions for rc-tree 2.1.0
 // Project: http://github.com/react-component/tree
 // Definitions by: John Reilly <https://github.com/johnnyreilly>, Methuselah96 <https://github.com/Methuselah96>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
-import { Component } from "react";
+import { Component, MouseEvent } from "react";
 
 export interface InternalTreeNodeProps extends TreeNodeProps {
     eventKey: string;
@@ -25,6 +25,15 @@ export interface TreeNodeProps {
      * additional css class for treeNode
      */
     className?: string;
+
+    /**
+     * control node checkable if Tree is checkable
+     */
+    checkable?: boolean;
+    /**
+     * set style to treeNode
+     */
+    style?: Object;
     /**
      * whether treeNode is disabled
      */
@@ -38,6 +47,11 @@ export interface TreeNodeProps {
      */
     title?: string | JSX.Element;
     /**
+     * it's used with tree props's (default)ExpandedKeys / (default)CheckedKeys / (default)SelectedKeys.
+     * you'd better to set it, and it must be unique in the tree's all treeNodes
+     */
+    key?: string;
+    /**
      * whether it is a leaf node
      */
     isLeaf?: boolean;
@@ -45,6 +59,10 @@ export interface TreeNodeProps {
      * customize icon. When you pass component, whose render will receive full TreeNode props as component props
      */
     icon?: JSX.Element | ((props: InternalTreeNodeProps) => JSX.Element);
+    /**
+     * specific the switcher icon.
+     */
+    switcherIcon?: React.ReactNode | ((props: InternalTreeNode) => React.ReactNode);
 }
 
 export class TreeNode extends Component<TreeNodeProps> { }
@@ -67,6 +85,7 @@ export interface SelectData {
     selectedNodes: InternalTreeNode[];
     node: InternalTreeNode;
     event: "select";
+    nativeEvent: MouseEvent;
 }
 
 export interface OnRightClickData {
@@ -258,6 +277,10 @@ export interface TreeProps {
      * it execs when fire the tree's dragend event
      */
     onDragEnd?: (props: OnDragEndData) => void;
+
+    switcherIcon?: JSX.Element | ((props: InternalTreeNodeProps) => JSX.Element);
+
+    treeData?: TreeNodeProps[]; 
 }
 
-export default class Tree extends Component<TreeProps> { }
+export class Tree extends Component<TreeProps> { }
