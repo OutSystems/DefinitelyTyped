@@ -63,6 +63,10 @@ export interface TreeNodeProps {
      * specific the switcher icon.
      */
     switcherIcon?: React.ReactNode | ((props: InternalTreeNode) => React.ReactNode);
+    /**
+     * Tree Node Children
+     */
+    children?: TreeNodeProps[];
 }
 
 export class TreeNode extends Component<TreeNodeProps> { }
